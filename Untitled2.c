@@ -1,53 +1,39 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <string.h>
-#define N 129
-struct map {
-    char shen[10];
-    char shi[15];
+#define N 150
+struct go {
+    char b[10];
+    char c[15];
     int num;
-
 } a[N], * pa;
 int main() {
-    FILE* fp, * fp2;
-
-    int i;
+    FILE*fp1,*fp2;
     pa = a;
-
-    //打开从文件
-    if ((fp = fopen("yq_in.txt", "r")) == NULL) {
-        printf("Failure to open yq_in.txt!\n");
+    if ((fp1 = fopen("yq_in.txt", "r")) == NULL) {
         exit(0);
     }
     if ((fp2 = fopen("yq_out.txt", "w")) == NULL) {
-        printf("Failure to open yq_out.txt!\n");
         exit(0);
     }
-
-    //从文件yq_in.txt中读取数据，保存到a
-    for (i = 0; i < N; i++, pa++) {
-        fscanf(fp, "%s	%s	%d\n", pa->shen, pa->shi, &pa->num);
+    for (int i = 0; i < N; i++, pa++) {
+        fscanf(fp1, "%s	%s	%d\n", pa->b, pa->c, &pa->num);
     }
     pa = a;
-    //将a的数据输出到yq_out.txt
-    for (i = 0; i < N; i++, pa++) {
-        if (a[i].num == 0)
+    for (int j = 0; j < N; j++, pa++) {
+        if (a[j].num == 0)
             continue;
-        if(i==0)
-            fprintf(fp2,"%s\n%s	%d\n", pa->shen, pa->shi, pa->num);
+        if(j==0)
+            fprintf(fp2,"%s\n%s	%d\n", pa->b, pa->c, pa->num);
         else {
-
-            if (strcmp(a[i].shen,a[i-1].shen)==0)
-                fprintf(fp2,"%s\t%d\n", a[i].shi, a[i].num);
+            if (strcmp(a[j].b,a[j-1].b)==0)
+                fprintf(fp2,"%s\t%d\n", a[j].c, a[j].num);
             else{
-                fprintf(fp2,"\n%s\n%s\t%d\n", a[i].shen, a[i].shi, a[i].num);
-
+                fprintf(fp2,"\n%s\n%s\t%d\n", a[j].b, a[j].c, a[j].num);
             }
-
         }
-
     }
-    fclose(fp);
+    fclose(fp1);
     fclose(fp2);
     return 0;
-}、
+}
